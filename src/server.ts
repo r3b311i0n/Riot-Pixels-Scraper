@@ -4,9 +4,10 @@ import Finder from './finder';
 const port = 3000;
 
 const requestHandler = async (request: IncomingMessage, response: ServerResponse) => {
-    const finder = new Finder('Tekken 7');
+    const finder = new Finder(request.url);
 
-    await finder.scrape().then((value) => response.end(value)).catch((error) => console.error(error));
+    await finder.scrape().then((value) => response.end(JSON.stringify(value, undefined, 3), 'application/json'))
+        .catch((error) => console.error(error));
 };
 
 const server = createServer(requestHandler);
