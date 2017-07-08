@@ -1,0 +1,35 @@
+{
+  "name": "riot-pixels-scraper",
+  "version": "0.0.1",
+  "description": "A REST-like scraper for en.riotpixels.com.",
+  "main": "./dist/server.js",
+  "scripts": {
+    "listen": "node ./dist/server.js",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/r3b311i0n/riot-pixels-scraper.git"
+  },
+  "keywords": [
+    "scraper",
+    "REST",
+    "riot-pixels",
+    "api"
+  ],
+  "author": "Amal Karunarathna",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/r3b311i0n/riot-pixels-scraper/issues"
+  },
+  "homepage": "https://github.com/r3b311i0n/riot-pixels-scraper#readme",
+  "devDependencies": {
+    "@types/cheerio": "^0.22.2",
+    "@types/request": "0.0.45",
+    "cheerio": "^1.0.0-rc.2",
+    "request": "^2.81.0",
+    "tslint": "^5.5.0",
+    "tslint-microsoft-contrib": "^5.0.1",
+    "typescript": "^2.4.1"
+  }
+}
