@@ -9,7 +9,7 @@ export default class Scraper {
 
     private url: string;
 
-    public scrape(): Promise<{ title: string, cover: string, developer: string, publisher: string } | number> {
+    public scrape(): Promise<{ title: string, cover: string, developers: string[], publishers: string[] } | number> {
         return new Promise((resolve, reject) => {
             get(this.url, (err: boolean, response: IncomingMessage, body: string) => {
                 if (err) {
@@ -20,11 +20,29 @@ export default class Scraper {
 
                 const title = $('.title > h3').text().trim();
                 const cover = $('.cover img').attr('src');
-                const companies = $('.title > .links > span:first-child a');
-                const developer = companies.filter((index, element) => $(element).attr('title') === 'Developer').text();
-                const publisher = companies.filter((index, element) => $(element).attr('title') === 'Publisher').text();
 
-                const game = (title !== '') ? {title, cover, developer, publisher} : 404;
+                // Get companies.
+                const companies = $('.title > .links > span:first-child a');
+                const developers: string[] = [];
+                const publishers: string[] = [];
+                companies.filter((index, element) => {
+                    if ($(element).attr('title') === 'Developer') {
+                        developers.push($(element).text());
+
+                        return true;
+                    }
+                    else if ($(element).attr('title') === 'Publisher') {
+                        publishers.push($(element).text());
+
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                });
+
+                // Return final game object.
+                const game = (title !== '') ? {title, cover, developers, publishers} : 404;
 
                 resolve(game);
             });

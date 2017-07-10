@@ -7,7 +7,7 @@ const requestHandler = async (request: IncomingMessage, response: ServerResponse
     const scraper = new Scraper(request.url);
 
     await scraper.scrape().then((value) => {
-        if (typeof value !== 'number') {
+        if (value !== 404) {
             response.writeHead(200, {
                 'Content-Type': 'application/json; charset=utf-8'
             });
