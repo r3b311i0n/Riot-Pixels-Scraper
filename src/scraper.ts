@@ -2,7 +2,7 @@ import cheerio = require('cheerio');
 import {IncomingMessage} from 'http';
 import {get} from 'request';
 
-export default class Finder {
+export default class Scraper {
     constructor(url: string) {
         this.url = 'http://en.riotpixels.com/games/' + url.replace(/\W/, '-').toLowerCase().slice(1);
     }

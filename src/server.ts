@@ -1,12 +1,12 @@
 import {createServer, IncomingMessage, ServerResponse} from 'http';
-import Finder from './finder';
+import Scraper from './scraper';
 
 const port = 3000;
 
 const requestHandler = async (request: IncomingMessage, response: ServerResponse) => {
-    const finder = new Finder(request.url);
+    const scraper = new Scraper(request.url);
 
-    await finder.scrape().then((value) => {
+    await scraper.scrape().then((value) => {
         if (typeof value !== 'number') {
             response.writeHead(200, {
                 'Content-Type': 'application/json; charset=utf-8'
