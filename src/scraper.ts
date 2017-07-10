@@ -11,8 +11,8 @@ export default class Scraper {
 
     public scrape(): Promise<{ title: string, cover: string, developers: string[], publishers: string[] } | number> {
         return new Promise((resolve, reject) => {
-            get(this.url, (err: boolean, response: IncomingMessage, body: string) => {
-                if (err) {
+            get(this.url, (err: object, response: IncomingMessage, body: string) => {
+                if (response.statusCode > 399 || response.statusCode < 200) {
                     reject(err);
                 }
 
