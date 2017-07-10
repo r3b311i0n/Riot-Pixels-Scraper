@@ -1,10 +1,12 @@
 {
   "name": "riot-pixels-scraper",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A REST-like scraper for en.riotpixels.com.",
   "main": "./dist/server.js",
   "scripts": {
-    "listen": "node ./dist/server.js",
+    "listen": "node ./dist/bundle.js",
+    "watch": "webpack --watch",
+    "nodemon": "nodemon ./dist/bundle.js localhost 4200",
     "test": "test"
   },
   "repository": {
@@ -28,8 +30,11 @@
     "@types/request": "0.0.45",
     "cheerio": "^1.0.0-rc.2",
     "request": "^2.81.0",
+    "source-map-loader": "^0.2.1",
+    "ts-loader": "^2.2.2",
     "tslint": "^5.5.0",
     "tslint-microsoft-contrib": "^5.0.1",
-    "typescript": "^2.4.1"
+    "typescript": "^2.4.1",
+    "webpack": "^3.1.0"
   }
 }

@@ -96,7 +96,7 @@
       true,
       1
     ],
-    "no-require-imports": true,
+    "no-require-imports": false,
     "trailing-comma": [
       false
     ],
