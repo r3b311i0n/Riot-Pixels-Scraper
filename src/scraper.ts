@@ -41,8 +41,8 @@ export default class Scraper {
                     }
                 });
 
-                // Return final game object.
-                const game = (title !== '') ? {title, cover, developers, publishers} : 404;
+                // Final game object.
+                const game = {title, cover, developers, publishers};
 
                 resolve(game);
             });

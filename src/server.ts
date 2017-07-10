@@ -7,21 +7,19 @@ const requestHandler = async (request: IncomingMessage, response: ServerResponse
     const scraper = new Scraper(request.url);
 
     await scraper.scrape().then((value) => {
-        if (value !== 404) {
-            response.writeHead(200, {
-                'Content-Type': 'application/json; charset=utf-8'
-            });
+        response.writeHead(200, {
+            'Content-Type': 'application/json; charset=utf-8'
+        });
 
-            return response.write(JSON.stringify(value, undefined, 3));
-        }
-        else {
-            response.writeHead(404, {
-                'Content-Type': 'text/plain; charset=utf-8'
-            });
+        return response.write(JSON.stringify(value, undefined, 3));
+    }).catch((error) => {
+        response.writeHead(404, {
+            'Content-Type': 'text/plain; charset=utf-8'
+        });
+        console.error(error);
 
-            return response.write('What you seek cannot be found, perhaps it is within yourself.');
-        }
-    }).catch((error) => console.error(error));
+        return response.write('What you seek cannot be found, perhaps it is within yourself.');
+    });
 
     response.end();
 };
