@@ -7,19 +7,21 @@ const requestHandler = async (request: IncomingMessage, response: ServerResponse
     const finder = new Finder(request.url);
 
     await finder.scrape().then((value) => {
-        response.writeHead(200, {
-            'Content-Type': 'application/json; charset=utf-8'
-        });
+        if (typeof value !== 'number') {
+            response.writeHead(200, {
+                'Content-Type': 'application/json; charset=utf-8'
+            });
 
-        return response.write(JSON.stringify(value, undefined, 3));
-    }).catch((error) => {
-        response.writeHead(404, {
-            'Content-Type': 'text/plain; charset=utf-8'
-        });
-        console.error(error);
+            return response.write(JSON.stringify(value, undefined, 3));
+        }
+        else {
+            response.writeHead(404, {
+                'Content-Type': 'text/plain; charset=utf-8'
+            });
 
-        return response.write('What you seek cannot be found, perhaps it is within yourself.');
-    });
+            return response.write('What you seek cannot be found, perhaps it is within yourself.');
+        }
+    }).catch((error) => console.error(error));
 
     response.end();
 };

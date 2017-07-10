@@ -9,7 +9,7 @@ export default class Finder {
 
     private url: string;
 
-    public scrape(): Promise<{ title: string, cover: string, developer: string, publisher: string }> {
+    public scrape(): Promise<{ title: string, cover: string, developer: string, publisher: string } | number> {
         return new Promise((resolve, reject) => {
             get(this.url, (err: boolean, response: IncomingMessage, body: string) => {
                 if (err) {
@@ -24,7 +24,7 @@ export default class Finder {
                 const developer = companies.filter((index, element) => $(element).attr('title') === 'Developer').text();
                 const publisher = companies.filter((index, element) => $(element).attr('title') === 'Publisher').text();
 
-                const game = {title, cover, developer, publisher};
+                const game = (title !== '') ? {title, cover, developer, publisher} : 404;
 
                 resolve(game);
             });
