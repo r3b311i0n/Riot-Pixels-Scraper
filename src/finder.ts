@@ -9,7 +9,7 @@ export default class Finder {
 
     private url: string;
 
-    public scrape(): Promise<{ title: string, cover: string, developer: string }> {
+    public scrape(): Promise<{ title: string, cover: string, developer: string, publisher: string }> {
         return new Promise((resolve, reject) => {
             get(this.url, (err: boolean, response: IncomingMessage, body: string) => {
                 if (err) {
@@ -20,10 +20,11 @@ export default class Finder {
 
                 const title = $('.title > h3').text().trim();
                 const cover = $('.cover img').attr('src');
-                const developer = $('.title > .links > span:nth-child(1) > a:nth-child(1)').html();
-                const publisher = '';
+                const companies = $('.title > .links > span:first-child a');
+                const developer = companies.filter((index, element) => $(element).attr('title') === 'Developer').text();
+                const publisher = companies.filter((index, element) => $(element).attr('title') === 'Publisher').text();
 
-                const game = {title, cover, developer};
+                const game = {title, cover, developer, publisher};
 
                 resolve(game);
             });
