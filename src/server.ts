@@ -1,12 +1,12 @@
 import {createServer, IncomingMessage, ServerResponse} from 'http';
-import Scraper from './scraper';
+import Game from './game';
 
 const port = 3000;
 
 const requestHandler = async (request: IncomingMessage, response: ServerResponse) => {
-    const scraper = new Scraper(request.url);
+    const game = new Game(request.url);
 
-    await scraper.scrape().then((value) => {
+    await game.scrape().then((value) => {
         response.writeHead(200, {
             'Content-Type': 'application/json; charset=utf-8'
         });
