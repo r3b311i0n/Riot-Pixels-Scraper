@@ -9,7 +9,7 @@ export default class Scraper {
 
     private url: string;
 
-    public scrape(): Promise<{ title: string, cover: string, developers: string[], publishers: string[] } | number> {
+    public scrape(): Promise<{ title: string, cover: string, developers: string[], publishers: string[], platforms: string[] } | number> {
         return new Promise((resolve, reject) => {
             get(this.url, (err: object, response: IncomingMessage, body: string) => {
                 if (response.statusCode > 399 || response.statusCode < 200) {
@@ -22,27 +22,25 @@ export default class Scraper {
                 const cover = $('.cover img').attr('src');
 
                 // Get companies.
-                const companies = $('.title > .links > span:first-child a');
                 const developers: string[] = [];
                 const publishers: string[] = [];
-                companies.filter((index, element) => {
-                    if ($(element).attr('title') === 'Developer') {
-                        developers.push($(element).text());
+                for (const obj of $('.title > .links > span:first-child a').toArray()) {
+                    if ($(obj).attr('title') === 'Developer') {
+                        developers.push($(obj).text());
+                    }
+                    else if ($(obj).attr('title') === 'Publisher') {
+                        publishers.push($(obj).text());
+                    }
+                }
 
-                        return true;
-                    }
-                    else if ($(element).attr('title') === 'Publisher') {
-                        publishers.push($(element).text());
-
-                        return true;
-                    }
-                    else {
-                        return false;
-                    }
-                });
+                // Get platforms.
+                const platforms: string[] = [];
+                for (const obj of $('.title > a:first-child').children().toArray()) {
+                    platforms.push($(obj).attr('title'));
+                }
 
                 // Final game object.
-                const game = {title, cover, developers, publishers};
+                const game = {title, cover, developers, publishers, platforms};
 
                 resolve(game);
             });
