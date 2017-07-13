@@ -12,7 +12,7 @@ export abstract class Scraper {
     protected getPlatforms(): string[] {
         const list: string[] = [];
 
-        for (const obj of this.$('.title > a:first-child').children().toArray()) {
+        for (const obj of this.$('.title > a:first-child > i').toArray()) {
             list.push(this.$(obj).attr('title'));
         }
         for (const obj of this.$('.title > a:first-child > .submenu').children().toArray()) {
