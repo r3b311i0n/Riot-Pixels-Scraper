@@ -5,7 +5,7 @@
   "main": "./dist/server.js",
   "scripts": {
     "listen": "node ./dist/bundle.js",
-    "watch": "webpack --watch",
+    "watch": "webpack --watch --progress --colors --profile",
     "nodemon": "nodemon ./dist/bundle.js localhost 4200",
     "test": "test"
   },
