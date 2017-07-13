@@ -3,12 +3,21 @@ import {IncomingMessage} from 'http';
 import {get} from 'request';
 import {Scraper} from './scraper';
 
+interface IGameObject {
+    title: string;
+    cover: string;
+    developers: string[];
+    publishers: string[];
+    score: number;
+    platforms: string[];
+}
+
 export default class Game extends Scraper {
     constructor(url: string) {
-        super('http://en.riotpixels.com/games/' + url.replace(/\W/, '-').toLowerCase().slice(1));
+        super('http://en.riotpixels.com/games/' + url.replace(/\W/, '-').toLowerCase());
     }
 
-    public scrape(): Promise<{ title: string, cover: string, developers: string[], publishers: string[], platforms: string[] } | number> {
+    public scrape(): Promise<IGameObject | number> {
         return new Promise((resolve, reject) => {
             get(this.url, (err: object, response: IncomingMessage, body: string) => {
                 if (response.statusCode > 399 || response.statusCode < 200) {
@@ -33,11 +42,15 @@ export default class Game extends Scraper {
                 }
 
                 // todo: Add release dates.
+                // todo: Add genres.
                 // Get platforms.
                 const platforms: string[] = this.getPlatforms();
 
+                // Game score
+                const score = parseInt(this.$('#mark-right-users strong').text(), 10);
+
                 // Final game object.
-                const game = {title, cover, developers, publishers, platforms};
+                const game = {title, cover, developers, publishers, score, platforms};
 
                 resolve(game);
             });
