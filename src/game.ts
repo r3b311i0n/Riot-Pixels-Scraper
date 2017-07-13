@@ -15,28 +15,26 @@ export default class Game extends Scraper {
                     reject(err);
                 }
 
-                const $ = cheerio.load(body);
+                this.$ = cheerio.load(body);
 
-                const title = $('.title > h3').text().trim();
-                const cover = $('.cover img').attr('src');
+                const title = this.$('.title > h3').text().trim();
+                const cover = this.$('.cover img').attr('src');
 
                 // Get companies.
                 const developers: string[] = [];
                 const publishers: string[] = [];
-                for (const obj of $('.title > .links > span:first-child a').toArray()) {
-                    if ($(obj).attr('title') === 'Developer') {
-                        developers.push($(obj).text());
+                for (const obj of this.$('.title > .links > span:first-child a').toArray()) {
+                    if (this.$(obj).attr('title') === 'Developer') {
+                        developers.push(this.$(obj).text());
                     }
-                    else if ($(obj).attr('title') === 'Publisher') {
-                        publishers.push($(obj).text());
+                    else if (this.$(obj).attr('title') === 'Publisher') {
+                        publishers.push(this.$(obj).text());
                     }
                 }
 
+                // todo: Add release dates.
                 // Get platforms.
-                const platforms: string[] = [];
-                for (const obj of $('.title > a:first-child').children().toArray()) {
-                    platforms.push($(obj).attr('title'));
-                }
+                const platforms: string[] = this.getPlatforms();
 
                 // Final game object.
                 const game = {title, cover, developers, publishers, platforms};
