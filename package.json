@@ -29,6 +29,7 @@
     "@types/cheerio": "^0.22.2",
     "@types/request": "0.0.45",
     "cheerio": "^1.0.0-rc.2",
+    "nodemon": "^1.11.0",
     "request": "^2.81.0",
     "source-map-loader": "^0.2.1",
     "ts-loader": "^2.2.2",
